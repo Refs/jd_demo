@@ -1,0 +1,56 @@
+/*写代码就是抄，天下代码一大抄，看你会抄不会抄，这也是一种领悟，所以要放下，看着老师的代码，写自己代码的心理障碍*/
+
+*,
+::before,
+::after{
+    /**/
+    margin: 0;
+    padding: 0;
+
+    /*1.清除默认的点击高亮效果*/
+    -webkit-tap-highlight-color: transparent;
+
+    /*2.盒子模型*/
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /*3.统一文字设置*/
+    font-size: 14px;
+    font-family: 'Microsoft Yahei','sans-serif';
+}
+
+/*4.去除input标签的默认样式*/
+input{
+    border: none;
+    -webkit-appearance: none;
+}
+
+/*5.去除a标签的下划线*/
+
+a {
+    text-decoration:none;
+}
+
+/*6.去除页面小圆点*/
+ol,ul{
+    list-style:none;
+}
+
+/*7.清除浮动*/
+.f_l{
+    float:left;
+}
+.f_r{
+    float:right;
+}
+.clearfix::before,
+.clearfix::after{
+    content: '';
+    display: block;
+    line-height:0;
+    height:0;
+    /*visibility: hidden----将元素隐藏，但是在网页中该占的位置还是占着。
+    display: none----将元素的显示设为无，即在网页中不占任何的位置。*/
+    visibility: hidden;
+    clear:both;
+}
