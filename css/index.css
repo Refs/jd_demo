@@ -1,0 +1,152 @@
+
+/*是盒子，都是具有宽高的，否则就不是一个盒子，而是一条线，之所以不给宽，是因为块级元素独占一行，或被子元素撑开，之所以不给高，是以为会被子元素撑开;所以以后见了一个盒子，首先想到的就是给其一个宽高，否则就不是一个盒子*/
+
+.jd_container{
+   width: 100%;
+   position: relative;
+   /*下面这一条是为了让屏幕在没有内容撑开的情况下，上下滑动*/
+   min-height:800px;
+   background-color: #fff;
+
+}
+.jd_container .jd_header{
+    z-index: 99;
+    width: 100%;
+    height: 40px;
+    background-color: rgb(201, 21, 35);
+    position: relative;
+    padding-left: 70px;
+    padding-right: 60px;
+}
+.jd_container .jd_header .header_logo{
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 60px;
+    height: 36px;
+    background-image: url('./../images/sprites.png');
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    background-position: 0 -103px;
+}
+.jd_container .jd_header .header_glass{
+    width: 20px;
+    height: 20px;
+    /*border: 1px solid #000;*/
+    position: absolute;
+    left: 76px;
+    top: 10px;
+    background-image: url('./../images/sprites.png');
+    background-size: 200px 200px;
+    background-position: -60px -109px;
+    background-repeat: no-repeat;
+}
+.jd_container .jd_header .header_search{
+    width: 100%;
+    height: 30px;
+    margin-top: 5px;
+    border-radius: 15px;
+    padding-left: 28px;
+}
+.jd_container .jd_header .header_login{
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 17px;
+    color: white;
+}
+
+.jd_container .jd_banner{
+    position: relative;
+    width: 100%;
+}
+.jd_container .jd_banner .banner_images{
+    width: 1000%;
+    overflow: hidden;
+}
+.jd_container .jd_banner .banner_images li{
+    float: left;
+    width: 10%;
+}
+.jd_container .jd_banner .banner_images li a{
+    display: block;
+    width: 100%;
+}
+.jd_container .jd_banner .banner_images li a img{
+    display: block;
+    width: 100%;
+}
+
+.jd_container .jd_banner .banner_index{
+    position: absolute;
+    width:88px;
+    height: 6px;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -44px;
+    /*border: 1px solid #000;*/
+
+}
+.jd_container .jd_banner .banner_index li{
+    float: left;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+.jd_container .jd_banner .banner_index li.current{
+    background-color: #fff;
+}
+
+.jd_container .jd_nav{
+  	width: 100%;
+    border-bottom: 1px solid #ccc;
+	background-color: white;
+	
+}
+.jd_container .jd_nav ul{
+    width: 100%;
+    padding-top: 5px;
+  
+}
+.jd_container .jd_nav ul li{
+    float: left;
+    width: 25%;
+}
+.jd_container .jd_nav ul li a{
+    display: block;
+    width: 100%;
+    /*margin: 0 auto;
+      width: 100% 与 margin: auto 冲突，都已经100%了；
+    */
+  
+}
+.jd_container .jd_nav ul li a img{
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+}
+.jd_container .jd_nav ul li a p{
+    text-align: center;
+    padding: 5PX;
+}
+
+.jd_container .jd_main{
+    width: 100%;
+    /*height: 70px;*/
+    padding: 0 5px;
+    margin-top: 10px;
+    /*border: 1px solid #000;*/
+}
+.jd_container .jd_main .main_content{
+    width: 100%;
+    min-height: 50px;
+    margin-bottom: 5px;
+    box-shadow: gray;
+    background-color: #fff;
+    
+}
+.jd_container .jd_main .main_content .content_top{}
+.jd_container .jd_main .main_content .content_bottom{}
+
