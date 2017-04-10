@@ -388,24 +388,56 @@ moveX = event.touches[0].clientX -
         //1).扩大ul的移动范围；使ul能移动到额定范围之外；
     //3. touchend事件中
         //1). 手指松开吸附过去
-            //1>.      
+            //1>. 判断吸附方位 - ul出范围上界 - 向下吸     
+                //(1).修改distance的值 
+            //2>. 判断吸附方位 - ul出范围上界 - 向上吸      
+                //(1).修改distance的值
+            //3>. 移动ul并添加过渡 
+    //4. 在touchmove事件中清楚过渡 若不清除过渡，则会有0.3s的延迟；
+    //5. 优化代码 ,将常用的代码封装到一个函数中，使用的情景类似于less中的mxin;
+        //1). 开始过渡
+        //2). 结束过渡 
+        //3). 设置变换
+    //6. bug解决，底部位置吸不回去；向上滑动，当ul移出移动范围后松手，ul会自动吸附，当吸附的位置不是ul的底边而是ul的中间部分； 问题出在minDistanceY的计算方式上，应该考虑.header占位高度的影响；
+        //1). 获取.header的占位高度
+        //2). 从新计算范围下界 目的是为了让ul的范围下界向上抬一个header高的距离，而y轴的正方向是向下的，所以此处为向上应加一个负值；有时没必要过于纠结正负，随便写一个在浏览器上调试一下就确定了，这是最快的也是最直观的；
     
         function left_scroll(){
         var moveUl = document.querySelector('.main_left ul');
             var ulHeight = moveUl.offsetHeight;
             var parentHeight = document.querySelector('.main_left').offsetHeight;
+            //获取.header的占位高度
+            var headerHeight = document.querySelector('.header').offsetHeight;
             var maxDistance = 0;
-            var minDistance = parentHeight - ulHeight;
+            //从新计算移动范围下界
+            //var minDistance = parentHeight - ulHeight;
+            var minDistance = parentHeight - ulHeight - headerHeight;
             var startY = 0;
             var moveY = 0;
             var distanceY = 0;
             //定义ul能超出其移动范围的距离
             var delayDistance = 100;
+            //4.优化代码 定义函数
+            //1). 开始过渡
+            function startTransition (){
+                moveUl.style.transition = 'all .3s';
+            }
+            //2). 结束过渡
+            function endTransition (){
+                moveUl.style.transition = '';
+            }
+            //3). 设置变换
+            function setTransform (distance){
+                 moveUl.style.transform = 'translateY('+distance+'px)';
+            }
 
             moveUl.addEventListener('touchstart',function(event){    
                 var startY = event.touches[0].clientY;
             })
             moveUl.addEventListener('touchmove',function(event){
+                //清除ul的过渡
+                //moveUl.style.transtion = '';
+                endTransition();
                 var moveY = event.touches[0].clientY - startY;
 
                 //限制ul的移动范围，原本是限制在其移动范围最大值与最小值之内，现在在其范围的基础上，加上一个delayDistance这样，ul就能随手指移动至范围之外了，吸附的过程就是先移到移动范围以外，而后再自动吸附回移动范围以内；
@@ -416,14 +448,32 @@ moveX = event.touches[0].clientX -
                     moveY = 0;
                     distanceY = minDistance - delayDistance;
                 }
-                moveUl.style.transform = 'translateY('+(moveY + distanceY)+'px)';
+                //moveUl.style.transform = 'translateY('+(moveY + distanceY)+'px)';
+                setTransform(moveY + distanceY);
 
             })
             moveUl.addEventListener('touchend',function(event){
                 distanceY += moveY; 
+                //1). 手指松开吸附过去
+                //1>. 判断吸附方位 - ul出范围上界 - 向下吸     
+                if(distanceY > maxDistance){
+                    //(1).修改distance的值 
+                    distanceY = maxDistance;
+                //2>. 判断吸附方位 - ul出范围上界 - 向上吸      
+                }else if(distanceY < minDistance){
+                    //(1).修改distance的值
+                    distanceY = minDistance;
+                }
+                //3>. 移动ul并添加过渡 
+                //moveUl.style.transition = 'all .3s';
+                startTransition();
+                //moveUl.style.transform = 'translateY('+distanceY+'px)';
+                setTransform(distanceY);
             })
     }
 
-
-
 ```
+
+> 吸附bug:
+
+![](http://baihua.xicp.cn/17-4-10/1825011-file_1491826732597_14.png )
